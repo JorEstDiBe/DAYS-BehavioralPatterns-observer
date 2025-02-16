@@ -1,5 +1,6 @@
 package edu.unisabana.dyas.patterns.observer.impl;
 
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 
@@ -15,6 +16,8 @@ public class ConfigurationManager extends AbstractObservable {
     private static ConfigurationManager configurationManager;
 
     private ConfigurationManager() {
+        this.defaultDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        this.moneyFormat = new DecimalFormat("##.00");
     }
 
     public static ConfigurationManager getInstance() {
@@ -29,10 +32,10 @@ public class ConfigurationManager extends AbstractObservable {
     }
 
     public void setDefaultDateFormat(SimpleDateFormat defaultDateFormat) {
-//        System.out.println("Date Format change > " + 
-//                (this.defaultDateFormat!=null 
-//                        ?this.defaultDateFormat.toPattern():"Null") + " to " 
-//                + defaultDateFormat.toPattern());
+        System.out.println("Date Format change > " + 
+                (this.defaultDateFormat!=null 
+                        ?this.defaultDateFormat.toPattern():"Null") + " to " 
+                + defaultDateFormat.toPattern());
         this.defaultDateFormat = defaultDateFormat;
         notifyAllObservers("defaultDateFormat", this);
     }
@@ -42,8 +45,11 @@ public class ConfigurationManager extends AbstractObservable {
     }
 
     public void setMoneyFormat(NumberFormat moneyFormat) {
-//        System.out.println("Date Format change > ");
+        System.out.println("Money Format change > " + 
+                (this.moneyFormat != null 
+                    ? this.moneyFormat.format(1.11) : "Null") + " to " 
+                + moneyFormat.format(1.11));
         this.moneyFormat = moneyFormat;
         notifyAllObservers("moneyFormat", this);
-    }
+    }    
 }
